@@ -26,16 +26,24 @@ async def scoreboard(ctx):
 
 @bot.command(name='addme', help="use: '!addme player_name'")
 async def addme(ctx, we_chall):
-    firebase_lib.add_user_as_document(ctx.message.author.name, we_chall)
-    response = "Added " + we_chall+" to the score board"
-    await ctx.send(response)
+    if firebase_lib.does_discord_user_exist(ctx.message.author.name) is not None or ctx.message.author.bot:
+        await ctx.send(ctx.message.author.name + " already exist, or is a bot.")
+        return
+    else:
+        firebase_lib.add_user_as_document(ctx.message.author.name, we_chall)
+        response = "Added " + we_chall+" to the score board"
+        await ctx.send(response)
 
 
 @bot.command(name='deleteme', help='removes you from the HS wechall DB')
 async def deleteme(ctx):
-    firebase_lib.delete_user(ctx.message.author.name)
-    response = "Deleted user: " + ctx.message.author.name
-    await ctx.send(response)
+    if firebase_lib.does_discord_user_exist(ctx.message.author.name) is None or ctx.message.author.bot:
+        await ctx.send(ctx.message.author.name +" does not exist in the DB, or is a bot.")
+        return
+    else:
+        firebase_lib.delete_user(ctx.message.author.name)
+        response = "Deleted user: " + ctx.message.author.name
+        await ctx.send(response)
 
 
 @bot.command(name='sites', help="use:'sites player_name' displays the ctfs a player has linked on wechall")

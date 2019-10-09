@@ -47,3 +47,5 @@ def get_discord_users():
         users.append(value)
     return users
 
+def does_discord_user_exist(username):
+    return doc_ref.document(username).get().to_dict()

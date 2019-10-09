@@ -1,0 +1,6 @@
+beautifultable==0.8.0
+discord.py==1.2.3
+firebase_admin==3.0.0
+requests==2.22.0
+discord==1.0.1
+python-dotenv==0.10.3
